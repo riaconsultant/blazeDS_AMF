@@ -1,0 +1,4 @@
+blazeDS_AMF
+===========
+
+A BlazeDS client application is typically an Adobe Flex or AIR application. Flex and AIR applications use Flex components to communicate with the BlazeDS server, including the RemoteObject, HTTPService, WebService, Producer, and Consumer components. The HTTPService, WebService, Producer, and Consumer components are part of the Flex Software Development Kit (SDK). Although you typically use Flex or AIR to develop the client-side application, you can develop the client as a combination of Flex, HTML, and JavaScript. Or, you can develop it in HTML and JavaScript by using the Ajax client library to communicate with BlazeDS. A BlazeDS application consists of two parts: a client-side application and a server-side J2EE web application
