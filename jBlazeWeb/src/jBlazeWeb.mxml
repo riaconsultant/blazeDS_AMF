@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import com.jBlaze.VO.User;
+			
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.utils.ObjectUtil;
+			[Bindable]private var destination:String="JavaDestination";
+			[Bindable]private var endPoint:String="http://localhost:8080/jProject/messagebroker/amf";
+			[Bindable]private var source:String="TestService";
+			
+			protected function resultHandler(event:ResultEvent):void
+			{
+				txtId.text +=event.result.toString();
+				txtId.text +=ObjectUtil.toString(event.result as User);
+			}
+			
+			protected function faulHandler(event:FaultEvent):void
+			{
+				txtId.text=event.message.toString();
+			}
+			
+			protected function callAmfString(event:MouseEvent):void
+			{
+				remoteService.sayHello();				
+			}
+			protected function callAmfObject(event:MouseEvent):void
+			{
+				remoteService.getUserDetail();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RemoteObject id="remoteService" destination="{destination}" endpoint="{endPoint}" source="{source}" showBusyCursor="true">
+			<s:method name="sayHello" result="resultHandler(event)" fault="faulHandler(event)"></s:method>
+			<s:method name="getUserDetail" result="resultHandler(event)" fault="faulHandler(event)"></s:method>
+		</s:RemoteObject>
+	</fx:Declarations>
+	<mx:ControlBar width="100%" height="5%">
+		<s:Button label="Call String AMF" click="callAmfString(event)"/>
+		<s:Button label="Call User AMF" click="callAmfObject(event)"/>
+	</mx:ControlBar>
+	<mx:Canvas left="10" right="10" bottom="0" height="90%">
+		<s:TextArea id="txtId" x="10" y="10" width="419" height="374"/>
+		
+	</mx:Canvas>
+</s:Application>
